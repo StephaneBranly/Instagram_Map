@@ -1,19 +1,21 @@
+
 import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
+import Search from './components/Search';
 
 export default function App() {
   return (
     <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
+      <Search></Search>
+      <Text>L'application est enfin ouverte sur mon portable !</Text>
     </View>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
+    marginTop: 50,
+    backgroundColor: 'rgba(0,255,0,1)',
     flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
   },
 });
