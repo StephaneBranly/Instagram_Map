@@ -1,21 +1,20 @@
-
 import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
-import Search from './components/Search';
+import {StyleSheet, Text, View} from 'react-native';
+import Search from './src/components/Search';
+import Render_search from './src/components/Render_search';
 
 export default function App() {
   return (
     <View style={styles.container}>
       <Search></Search>
-      <Text>L'application est enfin ouverte sur mon portable !</Text>
+      <Render_search></Render_search>
     </View>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
-    marginTop: 50,
-    backgroundColor: 'rgba(0,255,0,1)',
+    backgroundColor: 'rgba(220,200,20,1)',
     flex: 1,
   },
 });
