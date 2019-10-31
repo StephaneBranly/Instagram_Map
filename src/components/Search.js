@@ -2,11 +2,10 @@ import React from 'react';
 import {StyleSheet, Button, TextInput, View } from 'react-native';
 //import UseAnimations from 'react-useanimations';
 
-import { getCityTLFromId } from '../libs/tl_city';
-
+/**/ 
 class Search extends React.Component {
     _load_city(){
-        getCityTLFromId("212988663").then(data => console.log(data));
+        catchCityTLFromId("212988663").then(data => console.log(data));
     }
 
     render() {

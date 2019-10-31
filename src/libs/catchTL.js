@@ -1,4 +1,5 @@
-export async function getCityTLFromId (text) {
+/* City catch informations */
+export async function catchCityTLFromId (text){
     const url = 'https://www.instagram.com/explore/locations/'+text+'/?__a=1';
     console.log(url);
     try {
@@ -10,3 +11,7 @@ export async function getCityTLFromId (text) {
     return console.error(error);
   }
 }
+
+/* User catch informations */
+
+// TODO: fonction catchUserTLFromID URL à utiliser : 'https://www.instagram.com/'+user+'/?__a=1'
