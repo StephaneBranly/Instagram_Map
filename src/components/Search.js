@@ -1,9 +1,8 @@
 import React from 'react';
 import {ActivityIndicator} from 'react-native';
 import {catchUserTLFromId} from '../libs/catchTL';
-import Render_search from './Render_search';
+import Render_search_timeline from './Render_search_timeline';
 import {Container, Header, Input, Item, Icon, Text} from 'native-base';
-import MapView from 'react-native-maps';
 
 class Search extends React.Component {
     constructor(props) {
@@ -17,7 +16,7 @@ class Search extends React.Component {
     }
     
     load_user(){
-        if (this.state.searchedText.length > 0) { // Seulement si le texte recherché n'est pas vide
+        if (this.state.searchedText.length > 0){
         this.setState({ isLoading: true })
         catchUserTLFromId(this.state.searchedText).then(datas => {
             this.setState({user_tl:datas, isLoading: false});
@@ -43,17 +42,17 @@ class Search extends React.Component {
             <Container>
                 <Container>
                 <Header searchBar rounded>
-                <Item>
-                    <Icon onPress={() => this.load_user()} name="ios-search" />
-                    <Input placeholder="Rechercher" onChangeText={(text) => this._searchTextInputChanged(text)}/>
-                    <Icon name="ios-people" />
-                </Item>
+                  <Item>
+                      <Icon onPress={() => this.load_user()} name="ios-search" />
+                      <Input placeholder="Rechercher" onChangeText={(text) => this._searchTextInputChanged(text)}/>
+                      <Icon name="ios-people" />
+                  </Item>
                 </Header>
-                <Render_search user_tl={this.state.user_tl}/>
+                <Render_search_timeline user_tl={this.state.user_tl}/>
                 </Container>
                 {this._displayLoading()}
             </Container>     
         )
     }
-}
-export default Search
+};
+export default Search;

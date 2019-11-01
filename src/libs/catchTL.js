@@ -13,7 +13,6 @@ export async function catchCityTLFromId (text){
 }
 
 /* User catch informations */
-/* City catch informations */
 export async function catchUserTLFromId (user){
   const url =  `https://www.instagram.com/${user}/?__a=1`;
   try {
@@ -24,5 +23,3 @@ catch (error) {
   return console.error(error);
 }
 }
-
-// TODO: fonction catchUserTLFromID URL à utiliser : 'https://www.instagram.com/'+user+'/?__a=1'

@@ -1,10 +1,9 @@
 import React from 'react';
 import Pic_insta from './Pic_insta';
-
 import get from 'lodash/get';
 import {Card, CardItem, Container, Left, Right, Text, Icon, Body, Thumbnail, Subtitle} from 'native-base';
 
-class Render_search extends React.Component {
+class Render_search_timeline extends React.Component {
     render() {
         const data_user = get(this.props.user_tl,"graphql.user");
         const data_user_tl = get(this.props.user_tl,"graphql.user.edge_owner_to_timeline_media.edges");
@@ -43,6 +42,5 @@ class Render_search extends React.Component {
             </Container>
         )
     }
-}
-export default Render_search
-/*recherche.graphql.location.edge_location_to_media.edges*/
+};
+export default Render_search_timeline;

@@ -1,7 +1,7 @@
 import React from 'react';
 import {Image} from 'react-native';
 import get from 'lodash/get';
-import {Card,Container,CardItem,Text,Icon,Left,Right} from 'native-base';
+import {Card,CardItem,Text,Icon,Left,Right} from 'native-base';
 
  
 class Pic_insta extends React.Component {
@@ -22,5 +22,4 @@ class Pic_insta extends React.Component {
         );
     }
 }
-
-export default Pic_insta
+export default Pic_insta;
