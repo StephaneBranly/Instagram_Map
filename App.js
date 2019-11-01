@@ -1,19 +1,52 @@
 import React from 'react';
-import {StyleSheet, Text, View} from 'react-native';
 import Search from './src/components/Search';
-import Render_search from './src/components/Render_search';
+import {Root, FooterTab, Footer, Icon, Text, Button} from 'native-base';
+import { AppLoading } from 'expo';
+import * as Font from 'expo-font';
+import {Ionicons} from '@expo/vector-icons';
 
-export default function App() {
-  return (
-    <View style={styles.container}>
-      <Search></Search>
-    </View>
-  );
+export default class App extends React.Component {
+constructor(props) {
+  super(props);
+  this.state = {
+    isReady: false,
+  };
 }
 
-const styles = StyleSheet.create({
-  container: {
-    backgroundColor: 'rgba(220,200,20,1)',
-    flex: 1,
-  },
-});
+async componentDidMount() {
+  await Font.loadAsync({
+    Roboto: require('native-base/Fonts/Roboto.ttf'),
+    Roboto_medium: require('native-base/Fonts/Roboto_medium.ttf'),
+    ...Ionicons.font,
+  });
+  this.setState({ isReady: true });
+}
+
+render() {
+  if (!this.state.isReady) {
+    return <AppLoading />;
+  }
+
+return(
+  <Root>
+    <Search style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}></Search>
+    <Footer>
+          <FooterTab>
+            <Button vertical>
+              <Icon name="ios-map" />
+              <Text>Map</Text>
+            </Button>
+            <Button vertical active>
+              <Icon name="ios-images" />
+              <Text>Timeline</Text>
+            </Button>
+            <Button vertical>
+              <Icon active name="ios-information-circle" />
+              <Text>A propos</Text>
+            </Button>
+          </FooterTab>
+        </Footer>
+  </Root>
+  );
+}
+}

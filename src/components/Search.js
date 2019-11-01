@@ -1,58 +1,60 @@
 import React from 'react';
-import {StyleSheet, Button, TextInput, View } from 'react-native';
+import {ActivityIndicator} from 'react-native';
 import {catchUserTLFromId} from '../libs/catchTL';
 import Render_search from './Render_search';
-import data from '../../examples/data_user';
+import {Container, Header, Input, Item, Icon, Text} from 'native-base';
+import MapView from 'react-native-maps';
 
-
-/**/ 
 class Search extends React.Component {
     constructor(props) {
         super(props);
-        this.state = {toggle: true, user_tl: []};
+        this.state = {
+            searchedText: "",
+            user_tl: [],
+            isLoading: false,
+        };
+        this.load_user();
     }
-
+    
     load_user(){
-        const id=this.state.toggle ? "stephane_branly" : "sebiandfaithy"
-        catchUserTLFromId(id).then(datas => {
-            this.setState({user_tl:datas, toggle: !this.state.toggle});
+        if (this.state.searchedText.length > 0) { // Seulement si le texte recherché n'est pas vide
+        this.setState({ isLoading: true })
+        catchUserTLFromId(this.state.searchedText).then(datas => {
+            this.setState({user_tl:datas, isLoading: false});
         });
-
+      }
     }
+    _searchTextInputChanged(text) {
+        this.setState({searchedText: text});
+    }
+
+    _displayLoading() {
+        if (this.state.isLoading) {
+          return (
+            <Container>
+              <ActivityIndicator size='large' />
+              {/* Le component ActivityIndicator possède une propriété size pour définir la taille du visuel de chargement : small ou large. Par défaut size vaut small, on met donc large pour que le chargement soit bien visible */}
+            </Container>
+          )
+        }
+      }
 
     render() {
-        console.log('1');
         return (
-            <View>
-                <View style={styles.conteneur}>
-                    <TextInput style={styles.text_input} placeholder='@username'/>
-                    <Button style={styles.button} title='Rechercher' onPress={() => this.load_user()}/>
-                </View>
+            <Container>
+                <Container>
+                <Header searchBar rounded>
+                <Item>
+                    <Icon onPress={() => this.load_user()} name="ios-search" />
+                    <Input placeholder="Rechercher" onChangeText={(text) => this._searchTextInputChanged(text)}/>
+                    <Icon name="ios-people" />
+                </Item>
+                </Header>
                 <Render_search user_tl={this.state.user_tl}/>
-            </View>     
+                </Container>
+                {this._displayLoading()}
+            </Container>     
         )
     }
 }
-
-const styles = StyleSheet.create({
-    text_input: {
-        flexDirection: 'row',
-        flex: 5,
-        paddingLeft: 5,
-    },
-
-    conteneur: {
-        marginTop: 35,
-        flexDirection: 'row',
-        flex: 0,
-        backgroundColor: 'rgba(13,13,13,0.7)',
-        alignItems: 'center',
-    },
-
-    button: {
-        flexDirection: 'row',
-        flex: 1,
-    },
-  });
-
 export default Search
