@@ -1,19 +1,35 @@
 import React from 'react';
 import {StyleSheet, Button, TextInput, View } from 'react-native';
-//import UseAnimations from 'react-useanimations';
+import {catchUserTLFromId} from '../libs/catchTL';
+import Render_search from './Render_search';
+import data from '../../examples/data_user';
+
 
 /**/ 
 class Search extends React.Component {
-    _load_city(){
-        catchCityTLFromId("212988663").then(data => console.log(data));
+    constructor(props) {
+        super(props);
+        this.state = {toggle: true, user_tl: []};
+    }
+
+    load_user(){
+        const id=this.state.toggle ? "stephane_branly" : "sebiandfaithy"
+        catchUserTLFromId(id).then(datas => {
+            this.setState({user_tl:datas, toggle: !this.state.toggle});
+        });
+
     }
 
     render() {
+        console.log('1');
         return (
-            <View style={styles.conteneur}>
-                <TextInput style={styles.text_input} placeholder='Indiquez la ville'/>
-                <Button style={styles.button} title='Rechercher' onPress={() => this._load_city()}/>
-            </View>
+            <View>
+                <View style={styles.conteneur}>
+                    <TextInput style={styles.text_input} placeholder='@username'/>
+                    <Button style={styles.button} title='Rechercher' onPress={() => this.load_user()}/>
+                </View>
+                <Render_search user_tl={this.state.user_tl}/>
+            </View>     
         )
     }
 }

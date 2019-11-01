@@ -1,12 +1,14 @@
 import React from 'react';
 import {StyleSheet, Image, Text, View } from 'react-native';
+
  
 class Pic_insta extends React.Component {
     render() {
         return (
             <View style={styles.conteneur}>
-                <Text style={styles.text}>ID image : {this.props.id}</Text>
-                <Image style={styles.image} source={{uri: this.props.src}}/>
+                <Text style={styles.text}>ID image : {this.props.post.node.id}</Text>
+                <Image style={styles.image}  style={{width: this.props.post.node.dimensions.width, height: this.props.post.node.dimensions.height}}
+                source={{uri: this.props.post.node.display_url}}/>
             </View>
         )
     }
@@ -27,8 +29,7 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         flex: 1,
         borderColor: 'rgb(0,0,0)',
-        width: 300,
-        height: 300,
+        
     },
   });
 

@@ -7,7 +7,6 @@ export default function App() {
   return (
     <View style={styles.container}>
       <Search></Search>
-      <Render_search></Render_search>
     </View>
   );
 }
