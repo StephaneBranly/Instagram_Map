@@ -1,7 +1,7 @@
 import React from 'react';
 import MapView from 'react-native-maps'
 import get from 'lodash/get';
-import {Card, CardItem, Container, Left, Right, Text, Icon, Body, Thumbnail, Subtitle} from 'native-base';
+import {Card, CardItem, Container, Text, Icon} from 'native-base';
 
 class Render_search_map extends React.Component {
     render() {
@@ -25,8 +25,7 @@ class Render_search_map extends React.Component {
             );
         }
         return (
-            <Container>
-                <MapView
+            <MapView style={{flex:1}}
                     initialRegion={{
                     latitude: 37.78825,
                     longitude: -122.4324,
@@ -34,7 +33,6 @@ class Render_search_map extends React.Component {
                     longitudeDelta: 0.0421,
                     }}
                 />
-            </Container>
         )
     }
 }

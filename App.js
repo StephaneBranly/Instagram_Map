@@ -6,6 +6,8 @@ import * as Font from 'expo-font';
 import {Ionicons} from '@expo/vector-icons';
 import Footer_app from './src/components/Footer';
 import Propos from './src/components/Propos';
+import Render_search_map from './src/components/Render_search_map';
+import Render_search_timeline from './src/components/Render_search_timeline';
 
 export default class App extends React.Component {
   constructor(props) {
@@ -23,7 +25,7 @@ export default class App extends React.Component {
       ...Ionicons.font,
     });
     this.setState({ isReady: true });
-    this.setState({screen:"propos"});
+    this.setState({screen:"map"});
   }
 
   change_screen_timeline = () => {
@@ -36,34 +38,31 @@ export default class App extends React.Component {
     this.setState({screen: "propos"});
   }
   render() {
-    if (!this.state.isReady) {
+    const { isReady, screen } = this.state;
+    if (!isReady) {
       return <AppLoading />;
     }
-  switch(this.state.screen){
+    let Component;
+  switch(screen){
     case 'timeline':
-        return(
-          <Root>
-            <Search style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}></Search>
-            <Footer_app screen='timeline'/>
-          </Root>
-          );
+      Component = () => <Search style={{flex: 1, justifyContent: 'center', alignItems: 'center'}} />;
+      break;
     case 'map':
-        return(
-          <Root>
-            <Render_search_map/>
-            <Footer_app screen='map'/>
-          </Root>
-          );
+      Component = () => <Render_search_map/>;
+      break;
     case 'propos':
-          return(
-          <Root>
-            <Propos/>
-            <Footer_app screen='propos'/>
-          </Root>
-          );
+      Component = () => <Propos />;
+      break;
     default:
       return <AppLoading />;   
     }
+
+    return (
+        <Root>
+          <Component />
+          <Footer_app screen={screen}/>
+        </Root>
+        );
   }
 }
 
