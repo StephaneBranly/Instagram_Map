@@ -3,6 +3,7 @@ import { ActivityIndicator } from "react-native";
 import Render_search_timeline from "./Render_search_timeline";
 import Render_search_map from "./Render_search_map";
 import { Container, Header, Input, Item, Icon, Text } from "native-base";
+import get from "lodash/get";
 
 class Search extends React.Component {
   constructor(props) {
@@ -20,18 +21,33 @@ class Search extends React.Component {
     }
   }
 
+  onChange = e => {
+    e.preventDefault();
+    const newText = get(e, "nativeEvent.text", "");
+    const { searchTextInputChanged } = this.props;
+    searchTextInputChanged(newText);
+  };
+
   render() {
-    const { load_user, screen, searchTextInputChanged, user_tl } = this.props;
+    const {
+      load_user,
+      screen,
+      searchedText,
+      searchFocus,
+      user_tl
+    } = this.props;
 
     return (
       <Container>
         <Container>
           <Header searchBar rounded>
             <Item>
-              <Icon onPress={() => load_user()} name="ios-search" />
+              <Icon onPress={load_user} name="ios-search" />
               <Input
-                placeholder="Rechercher1"
-                onChangeText={searchTextInputChanged}
+                placeholder="Rechercher"
+                value={searchedText}
+                onChange={this.onChange}
+                autoFocus={searchFocus}
               />
               <Icon name="ios-people" />
             </Item>

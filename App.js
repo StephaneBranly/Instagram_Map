@@ -16,7 +16,8 @@ export default class App extends React.Component {
     this.state = {
       isReady: false,
       screen: "",
-      searchedText: "",
+      searchFocus: false,
+      searchedText: "stephane_branl",
       user_tl: [],
       isLoading: false
     };
@@ -28,11 +29,12 @@ export default class App extends React.Component {
       Roboto_medium: require("native-base/Fonts/Roboto_medium.ttf"),
       ...Ionicons.font
     });
+
     this.setState({ isReady: true, screen: "map" });
   }
 
   load_user = () => {
-    const { searchedText } = this.state;
+    const { searchedText, user_tl } = this.state;
 
     if (searchedText.length > 0) {
       // this.setState({ isLoading: true });
@@ -43,62 +45,50 @@ export default class App extends React.Component {
   };
 
   searchTextInputChanged = text => {
-    this.setState({ searchedText: text });
+    this.setState({ searchFocus: true, searchedText: text });
   };
 
   change_screen_timeline = () => {
-    this.setState({ screen: "timeline" });
+    this.setState({ screen: "timeline", searchFocus: false });
   };
 
   change_screen_map = () => {
-    this.setState({ screen: "map" });
+    this.setState({ screen: "map", searchFocus: false });
   };
 
   change_screen_propos = () => {
-    this.setState({ screen: "propos" });
+    this.setState({ screen: "propos", searchFocus: false });
   };
 
   render() {
-    const { isReady, screen } = this.state;
+    const { isReady, screen, searchedText } = this.state;
     if (!isReady) {
       return <AppLoading />;
     }
 
-    let Component;
-    const pickedState = pick(this.state, ["isLoading", "screen", "user_tl"]);
+    const searchState = pick(this.state, [
+      "isLoading",
+      "screen",
+      "searchFocus",
+      "searchedText",
+      "user_tl"
+    ]);
 
-    switch (screen) {
-      case "timeline":
-        Component = () => (
-          <Search
-            load_user={this.load_user}
-            searchTextInputChanged={this.searchTextInputChanged}
-            {...pickedState}
-          />
-        );
-        break;
-
-      case "map":
-        Component = () => (
-          <Search
-            load_user={this.load_user}
-            searchTextInputChanged={this.searchTextInputChanged}
-            {...pickedState}
-          />
-        );
-        break;
-
-      case "propos":
-        Component = () => <Propos />;
-        break;
-
-      default:
-        return <AppLoading />;
+    if (!["map", "screen", "timeline"].includes(screen)) {
+      return <AppLoading />;
     }
 
     return (
       <Root>
-        <Component />
+        {screen === "propos" ? (
+          <Propos />
+        ) : (
+          <Search
+            load_user={this.load_user}
+            searchTextInputChanged={this.searchTextInputChanged}
+            {...searchState}
+          />
+        )}
         <Footer_app
           screen={screen}
           change_screen_timeline={this.change_screen_timeline}
