@@ -34,7 +34,7 @@ export default class App extends React.Component {
   change_screen_map = () => {
     this.setState({screen: "map"});
   }
-  change_screen_propos(){
+  change_screen_propos = () => {
     this.setState({screen: "propos"});
   }
   render() {
@@ -45,10 +45,10 @@ export default class App extends React.Component {
     let Component;
   switch(screen){
     case 'timeline':
-      Component = () => <Search style={{flex: 1, justifyContent: 'center', alignItems: 'center'}} />;
+      Component = () => <Search style={{flex: 1, justifyContent: 'center', alignItems: 'center'}} view='timeline'/>;
       break;
     case 'map':
-      Component = () => <Render_search_map/>;
+      Component = () => <Search view='map'/>;
       break;
     case 'propos':
       Component = () => <Propos />;
@@ -60,7 +60,12 @@ export default class App extends React.Component {
     return (
         <Root>
           <Component />
-          <Footer_app screen={screen}/>
+          <Footer_app 
+            screen={screen} 
+            change_screen_timeline={this.change_screen_timeline}
+            change_screen_map={this.change_screen_map}
+            change_screen_propos={this.change_screen_propos}
+            />
         </Root>
         );
   }

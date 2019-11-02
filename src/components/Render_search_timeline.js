@@ -16,10 +16,17 @@ class Render_search_timeline extends React.Component {
             );
         }
             
-        if(data_user.is_private==true)
+        if(data_user.is_private===true)
         {
             return (
                 <Card style={{flex:0}}>
+                    <CardItem header>
+                        <Left>
+                            <Thumbnail square large source={{uri:data_user.profile_pic_url_hd}}/>
+                            <Text>{data_user.full_name}</Text>
+                            <Text>({data_user.username})</Text>
+                        </Left>
+                    </CardItem>
                     <CardItem header><Icon name='ios-eye-off'/><Text>Ce compte est en mode privé...</Text></CardItem>
                 </Card>
             );

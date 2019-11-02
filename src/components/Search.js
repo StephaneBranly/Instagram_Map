@@ -2,6 +2,7 @@ import React from 'react';
 import {ActivityIndicator} from 'react-native';
 import {catchUserTLFromId} from '../libs/catchTL';
 import Render_search_timeline from './Render_search_timeline';
+import Render_search_map from './Render_search_map';
 import {Container, Header, Input, Item, Icon, Text} from 'native-base';
 
 class Search extends React.Component {
@@ -32,12 +33,13 @@ class Search extends React.Component {
           return (
             <Container>
               <ActivityIndicator size='large' />
-              </Container>
+            </Container>
           )
         }
       }
 
     render() {
+        const {view} = this.props;
         return (
             <Container>
                 <Container>
@@ -48,7 +50,8 @@ class Search extends React.Component {
                       <Icon name="ios-people" />
                   </Item>
                 </Header>
-                <Render_search_timeline user_tl={this.state.user_tl}/>
+                {view==='timeline' && <Render_search_timeline user_tl={this.state.user_tl}/>}
+                {view==='map' && <Render_search_map user_tl={this.state.user_tl}/>}
                 </Container>
                 {this._displayLoading()}
             </Container>     
