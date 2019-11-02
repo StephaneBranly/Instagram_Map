@@ -26,8 +26,7 @@ export default class App extends React.Component {
       Roboto_medium: require("native-base/Fonts/Roboto_medium.ttf"),
       ...Ionicons.font
     });
-    this.setState({ isReady: true });
-    this.setState({ screen: "map" });
+    this.setState({ isReady: true, screen: "map" });
   }
 
   load_user = () => {
