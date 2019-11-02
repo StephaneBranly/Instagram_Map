@@ -23,7 +23,7 @@ class Search extends React.Component {
   }
 
   render() {
-    const { view, _searchTextInputChanged, load_user, user_tl } = this.props;
+    const { view, searchTextInputChanged, load_user, user_tl } = this.props;
     return (
       <Container>
         <Container>
@@ -32,7 +32,7 @@ class Search extends React.Component {
               <Icon onPress={() => load_user()} name="ios-search" />
               <Input
                 placeholder="Rechercher"
-                onChangeText={text => _searchTextInputChanged(text)}
+                onChangeText={text => searchTextInputChanged(text)}
               />
               <Icon name="ios-people" />
             </Item>

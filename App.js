@@ -38,7 +38,7 @@ export default class App extends React.Component {
       });
     }
   };
-  _searchTextInputChanged = text => {
+  searchTextInputChanged = text => {
     this.setState({ searchedText: text });
   };
 
@@ -62,7 +62,7 @@ export default class App extends React.Component {
         Component = () => (
           <Search
             load_user={this.load_user}
-            _searchTextInputChanged={this._searchTextInputChanged}
+            searchTextInputChanged={this.searchTextInputChanged}
             view="timeline"
             {...this.state}
           />
@@ -72,7 +72,7 @@ export default class App extends React.Component {
         Component = () => (
           <Search
             load_user={this.load_user}
-            _searchTextInputChanged={this._searchTextInputChanged}
+            searchTextInputChanged={this.searchTextInputChanged}
             view="map"
             {...this.state}
           />
