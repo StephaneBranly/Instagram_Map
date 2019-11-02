@@ -7,7 +7,7 @@ import { Ionicons } from "@expo/vector-icons";
 import Footer_app from "./src/components/Footer";
 import Propos from "./src/components/Propos";
 import pick from "lodash/pick";
-import { catchUserTLFromId } from "./src/libs/catchTL";
+import { getDataTLFromId } from "./src/libs/getTL";
 
 export default class App extends React.Component {
   constructor(props) {
@@ -33,11 +33,11 @@ export default class App extends React.Component {
   }
 
   load_user = () => {
-    const { searchedText, user_tl } = this.state;
+    const { searchedText } = this.state;
 
     if (searchedText.length > 0) {
       this.setState({ isLoading: true });
-      catchUserTLFromId(this.state.searchedText).then(datas => {
+      getDataTLFromId(this.state.searchedText).then(datas => {
         this.setState({ user_tl: datas, isLoading: false });
       });
     }
@@ -73,7 +73,7 @@ export default class App extends React.Component {
       "user_tl"
     ]);
 
-    if (!["map", "screen", "timeline"].includes(screen)) {
+    if (!["map", "propos", "timeline"].includes(screen)) {
       return <AppLoading />;
     }
 

@@ -5,12 +5,15 @@ import { Card, CardItem, Container, Text, Icon } from "native-base";
 
 class Render_search_map extends React.Component {
   render() {
-    const data_user = get(this.props.user_tl, "graphql.user");
+    const { user_tl } = this.props;
+
+    const isUnavailable = get(user_tl, "unavailable", false);
+    const data_user = get(user_tl, "graphql.user");
     const data_user_tl = get(
       this.props.user_tl,
       "graphql.user.edge_owner_to_timeline_media.edges"
     );
-    if (!data_user || !data_user_tl) {
+    if (!data_user || !data_user_tl || isUnavailable) {
       return (
         <Card style={{ flex: 0 }}>
           <CardItem header>
