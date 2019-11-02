@@ -1,6 +1,5 @@
 import React from 'react';
 import {ActivityIndicator} from 'react-native';
-import {catchUserTLFromId} from '../libs/catchTL';
 import Render_search_timeline from './Render_search_timeline';
 import Render_search_map from './Render_search_map';
 import {Container, Header, Input, Item, Icon, Text} from 'native-base';
@@ -8,28 +7,13 @@ import {Container, Header, Input, Item, Icon, Text} from 'native-base';
 class Search extends React.Component {
     constructor(props) {
         super(props);
-        this.state = {
-            searchedText: "",
-            user_tl: [],
-            isLoading: false,
-        };
-        this.load_user();
+        const {load_user} = this.props;
+        load_user();
     }
     
-    load_user(){
-        if (this.state.searchedText.length > 0){
-        this.setState({ isLoading: true })
-        catchUserTLFromId(this.state.searchedText).then(datas => {
-            this.setState({user_tl:datas, isLoading: false});
-        });
-      }
-    }
-    _searchTextInputChanged(text) {
-        this.setState({searchedText: text});
-    }
-
     _displayLoading() {
-        if (this.state.isLoading) {
+        const {isLoading} = this.props;
+        if (isLoading) {
           return (
             <Container>
               <ActivityIndicator size='large' />
@@ -39,19 +23,19 @@ class Search extends React.Component {
       }
 
     render() {
-        const {view} = this.props;
+        const {view, _searchTextInputChanged, load_user, user_tl} = this.props;
         return (
             <Container>
                 <Container>
                 <Header searchBar rounded>
                   <Item>
-                      <Icon onPress={() => this.load_user()} name="ios-search" />
-                      <Input placeholder="Rechercher" onChangeText={(text) => this._searchTextInputChanged(text)}/>
+                      <Icon onPress={() => load_user()} name="ios-search" />
+                      <Input placeholder="Rechercher" onChangeText={(text) => _searchTextInputChanged(text)}/>
                       <Icon name="ios-people" />
                   </Item>
                 </Header>
-                {view==='timeline' && <Render_search_timeline user_tl={this.state.user_tl}/>}
-                {view==='map' && <Render_search_map user_tl={this.state.user_tl}/>}
+                {view==='timeline' && <Render_search_timeline user_tl={user_tl}/>}
+                {view==='map' && <Render_search_map user_tl={user_tl}/>}
                 </Container>
                 {this._displayLoading()}
             </Container>     

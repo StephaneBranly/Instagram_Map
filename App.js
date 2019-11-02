@@ -6,15 +6,17 @@ import * as Font from 'expo-font';
 import {Ionicons} from '@expo/vector-icons';
 import Footer_app from './src/components/Footer';
 import Propos from './src/components/Propos';
-import Render_search_map from './src/components/Render_search_map';
-import Render_search_timeline from './src/components/Render_search_timeline';
+import {catchUserTLFromId} from './src/libs/catchTL';
 
 export default class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       isReady: false,
-      screen: ""
+      screen: "",
+      searchedText: "",
+      user_tl: [],
+      isLoading: false,
     };
   }
 
@@ -26,6 +28,18 @@ export default class App extends React.Component {
     });
     this.setState({ isReady: true });
     this.setState({screen:"map"});
+  }
+
+  load_user = () => {
+      if (this.state.searchedText.length > 0){
+      this.setState({ isLoading: true })
+        catchUserTLFromId(this.state.searchedText).then(datas => {
+          this.setState({user_tl:datas, isLoading: false});
+     });
+    }
+  }
+  _searchTextInputChanged = (text) => {
+    this.setState({searchedText: text});
   }
 
   change_screen_timeline = () => {
@@ -45,10 +59,10 @@ export default class App extends React.Component {
     let Component;
   switch(screen){
     case 'timeline':
-      Component = () => <Search style={{flex: 1, justifyContent: 'center', alignItems: 'center'}} view='timeline'/>;
+      Component = () => <Search load_user={this.load_user} _searchTextInputChanged={this._searchTextInputChanged} view='timeline' {...this.state}/>;
       break;
     case 'map':
-      Component = () => <Search view='map'/>;
+      Component = () => <Search load_user={this.load_user} _searchTextInputChanged={this._searchTextInputChanged} view='map' {...this.state}/>;
       break;
     case 'propos':
       Component = () => <Propos />;
