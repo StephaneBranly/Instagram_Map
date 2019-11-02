@@ -7,8 +7,6 @@ import { Container, Header, Input, Item, Icon, Text } from "native-base";
 class Search extends React.Component {
   constructor(props) {
     super(props);
-    const { load_user } = this.props;
-    load_user();
   }
 
   _displayLoading() {
@@ -23,7 +21,8 @@ class Search extends React.Component {
   }
 
   render() {
-    const { view, searchTextInputChanged, load_user, user_tl } = this.props;
+    const { load_user, screen, searchTextInputChanged, user_tl } = this.props;
+
     return (
       <Container>
         <Container>
@@ -31,14 +30,16 @@ class Search extends React.Component {
             <Item>
               <Icon onPress={() => load_user()} name="ios-search" />
               <Input
-                placeholder="Rechercher"
-                onChangeText={text => searchTextInputChanged(text)}
+                placeholder="Rechercher1"
+                onChangeText={searchTextInputChanged}
               />
               <Icon name="ios-people" />
             </Item>
           </Header>
-          {view === "timeline" && <Render_search_timeline user_tl={user_tl} />}
-          {view === "map" && <Render_search_map user_tl={user_tl} />}
+          {screen === "timeline" && (
+            <Render_search_timeline user_tl={user_tl} />
+          )}
+          {screen === "map" && <Render_search_map user_tl={user_tl} />}
         </Container>
         {this._displayLoading()}
       </Container>

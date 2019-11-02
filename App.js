@@ -8,6 +8,7 @@ import Footer_app from "./src/components/Footer";
 import Propos from "./src/components/Propos";
 // import { catchUserTLFromId } from "./src/libs/catchTL";
 import datas from "./examples/data_user";
+import pick from "lodash/pick";
 
 export default class App extends React.Component {
   constructor(props) {
@@ -31,13 +32,16 @@ export default class App extends React.Component {
   }
 
   load_user = () => {
-    if (this.state.searchedText.length > 0) {
+    const { searchedText } = this.state;
+
+    if (searchedText.length > 0) {
       // this.setState({ isLoading: true });
       // catchUserTLFromId(this.state.searchedText).then(datas => {
       this.setState({ user_tl: datas, isLoading: false });
       // });
     }
   };
+
   searchTextInputChanged = text => {
     this.setState({ searchedText: text });
   };
@@ -45,42 +49,49 @@ export default class App extends React.Component {
   change_screen_timeline = () => {
     this.setState({ screen: "timeline" });
   };
+
   change_screen_map = () => {
     this.setState({ screen: "map" });
   };
+
   change_screen_propos = () => {
     this.setState({ screen: "propos" });
   };
+
   render() {
     const { isReady, screen } = this.state;
     if (!isReady) {
       return <AppLoading />;
     }
+
     let Component;
+    const pickedState = pick(this.state, ["isLoading", "screen", "user_tl"]);
+
     switch (screen) {
       case "timeline":
         Component = () => (
           <Search
             load_user={this.load_user}
             searchTextInputChanged={this.searchTextInputChanged}
-            view="timeline"
-            {...this.state}
+            {...pickedState}
           />
         );
         break;
+
       case "map":
         Component = () => (
           <Search
             load_user={this.load_user}
             searchTextInputChanged={this.searchTextInputChanged}
-            view="map"
-            {...this.state}
+            {...pickedState}
           />
         );
         break;
+
       case "propos":
         Component = () => <Propos />;
         break;
+
       default:
         return <AppLoading />;
     }
