@@ -6,9 +6,8 @@ import * as Font from "expo-font";
 import { Ionicons } from "@expo/vector-icons";
 import Footer_app from "./src/components/Footer";
 import Propos from "./src/components/Propos";
-// import { catchUserTLFromId } from "./src/libs/catchTL";
-import datas from "./examples/data_user";
 import pick from "lodash/pick";
+import { catchUserTLFromId } from "./src/libs/catchTL";
 
 export default class App extends React.Component {
   constructor(props) {
@@ -37,10 +36,10 @@ export default class App extends React.Component {
     const { searchedText, user_tl } = this.state;
 
     if (searchedText.length > 0) {
-      // this.setState({ isLoading: true });
-      // catchUserTLFromId(this.state.searchedText).then(datas => {
-      this.setState({ user_tl: datas, isLoading: false });
-      // });
+      this.setState({ isLoading: true });
+      catchUserTLFromId(this.state.searchedText).then(datas => {
+        this.setState({ user_tl: datas, isLoading: false });
+      });
     }
   };
 

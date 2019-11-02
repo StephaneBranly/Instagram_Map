@@ -12,12 +12,12 @@ export async function catchCityTLFromId(text) {
 }
 
 /* User catch informations */
-// export async function catchUserTLFromId(user) {
-//   const url = `https://www.instagram.com/${user}/?__a=1`;
-//   try {
-//     const response = await fetch(url);
-//     return await response.json();
-//   } catch (error) {
-//     return console.error(error);
-//   }
-// }
+export async function catchUserTLFromId(user) {
+  const url = `https://www.instagram.com/${user}/?__a=1`;
+  try {
+    const response = await fetch(url);
+    return await response.json();
+  } catch (error) {
+    return console.error(error);
+  }
+}
