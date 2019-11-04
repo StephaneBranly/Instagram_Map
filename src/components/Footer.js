@@ -14,19 +14,19 @@ class Footer_app extends React.Component {
         <FooterTab>
           <Button
             vertical
-            active={screen === "map"}
-            onPress={change_screen_map}
-          >
-            <Icon name="ios-map" />
-            <Text>Map</Text>
-          </Button>
-          <Button
-            vertical
             active={screen === "timeline"}
             onPress={change_screen_timeline}
           >
             <Icon name="ios-images" />
             <Text>Timeline</Text>
+          </Button>
+          <Button
+            vertical
+            active={screen === "map"}
+            onPress={change_screen_map}
+          >
+            <Icon name="ios-map" />
+            <Text>Map</Text>
           </Button>
           <Button
             vertical
