@@ -1,18 +1,8 @@
 import React from "react";
 import Pic_insta from "./Pic_insta";
 import get from "lodash/get";
-import {
-  Card,
-  CardItem,
-  Container,
-  Left,
-  Right,
-  Text,
-  Icon,
-  Body,
-  Thumbnail,
-  Subtitle
-} from "native-base";
+import { Card, Container } from "native-base";
+import { NotFindUserCard, PrivateUserCard, ResumeUserCard } from "./User_cards";
 
 class Render_search_timeline extends React.Component {
   render() {
@@ -25,52 +15,28 @@ class Render_search_timeline extends React.Component {
       "graphql.user.edge_owner_to_timeline_media.edges"
     );
     if (!data_user || !data_user_tl || isUnavailable) {
-      return (
-        <Card style={{ flex: 0 }}>
-          <CardItem header>
-            <Icon name="ios-warning" />
-            <Text>Ce compte n'existe pas...</Text>
-          </CardItem>
-        </Card>
-      );
+      return <NotFindUserCard />;
     }
 
     if (data_user.is_private === true) {
       return (
-        <Card style={{ flex: 0 }}>
-          <CardItem header>
-            <Left>
-              <Thumbnail
-                square
-                large
-                source={{ uri: data_user.profile_pic_url_hd }}
-              />
-              <Text>{data_user.full_name}</Text>
-              <Text>({data_user.username})</Text>
-            </Left>
-          </CardItem>
-          <CardItem header>
-            <Icon name="ios-eye-off" />
-            <Text>Ce compte est en mode privé...</Text>
-          </CardItem>
-        </Card>
+        <Container>
+          <ResumeUserCard
+            name={data_user.full_name}
+            username={data_user.username}
+            img={data_user.profile_pic_url_hd}
+          />
+          <PrivateUserCard />
+        </Container>
       );
     }
     return (
       <Container>
-        <Card style={{ flex: 0 }}>
-          <CardItem header>
-            <Left>
-              <Thumbnail
-                square
-                large
-                source={{ uri: data_user.profile_pic_url_hd }}
-              />
-              <Text>{data_user.full_name}</Text>
-              <Text>({data_user.username})</Text>
-            </Left>
-          </CardItem>
-        </Card>
+        <ResumeUserCard
+          name={data_user.full_name}
+          username={data_user.username}
+          img={data_user.profile_pic_url_hd}
+        />
         <Card
           dataArray={data_user_tl}
           renderRow={({ item }) => <Pic_insta post={item} />}
