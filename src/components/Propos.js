@@ -1,4 +1,5 @@
 import React from "react";
+import { Linking, TouchableHighlight } from "react-native";
 import {
   Container,
   Content,
@@ -24,11 +25,27 @@ class Propos extends React.Component {
             <ListItem>
               <Text>Date de création : 27/10/2019</Text>
             </ListItem>
-            <ListItem>
+
+            <ListItem
+              button
+              onPress={() => {
+                Linking.openURL(
+                  `https://github.com/StephaneBranly/Instagram_Map`
+                );
+              }}
+            >
               <Icon name="ios-git-network" />
               <Text> Github du projet</Text>
             </ListItem>
-            <ListItem>
+
+            <ListItem
+              button
+              onPress={() => {
+                Linking.openURL(
+                  `https://paypal.me/StephaneBranly?locale.x=fr_FR`
+                );
+              }}
+            >
               <Icon name="ios-gift" />
               <Text> Faire un don</Text>
             </ListItem>
@@ -36,28 +53,56 @@ class Propos extends React.Component {
             <Separator bordered>
               <Text>Contributeurs</Text>
             </Separator>
-            <ListItem>
+
+            <ListItem
+              button
+              onPress={() => {
+                Linking.openURL(`https://github.com/StephaneBranly`);
+              }}
+            >
               <Left style={{ flex: 1 }}>
-                <Thumbnail
-                  source={{
-                    uri:
-                      "https://avatars3.githubusercontent.com/u/51955833?s=460&v=4"
+                <TouchableHighlight
+                  onPress={() => {
+                    Linking.openURL(
+                      `https://avatars3.githubusercontent.com/u/51955833?s=460&v=4`
+                    );
                   }}
-                />
+                >
+                  <Thumbnail
+                    source={{
+                      uri:
+                        "https://avatars3.githubusercontent.com/u/51955833?s=460&v=4"
+                    }}
+                  />
+                </TouchableHighlight>
               </Left>
               <Body style={{ flex: 4 }}>
                 <Text>StephaneBranly</Text>
                 <Text note>Développeur</Text>
               </Body>
             </ListItem>
-            <ListItem>
+
+            <ListItem
+              button
+              onPress={() => {
+                Linking.openURL(`https://github.com/sebranly`);
+              }}
+            >
               <Left style={{ flex: 1 }}>
-                <Thumbnail
-                  source={{
-                    uri:
-                      "https://avatars1.githubusercontent.com/u/25478895?s=460&v=4"
+                <TouchableHighlight
+                  onPress={() => {
+                    Linking.openURL(
+                      `https://avatars1.githubusercontent.com/u/25478895?s=460&v=4`
+                    );
                   }}
-                />
+                >
+                  <Thumbnail
+                    source={{
+                      uri:
+                        "https://avatars1.githubusercontent.com/u/25478895?s=460&v=4"
+                    }}
+                  />
+                </TouchableHighlight>
               </Left>
               <Body style={{ flex: 4 }}>
                 <Text>sebranly</Text>

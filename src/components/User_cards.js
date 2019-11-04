@@ -1,4 +1,5 @@
 import React from "react";
+import { TouchableHighlight, Linking } from "react-native";
 import { Card, CardItem, Icon, Text, Left, Thumbnail } from "native-base";
 
 export class NotFindUserCard extends React.Component {
@@ -31,13 +32,29 @@ export class ResumeUserCard extends React.Component {
   render() {
     return (
       <Card style={{ flex: 0 }}>
-        <CardItem header>
-          <Left>
-            <Thumbnail square large source={{ uri: this.props.img }} />
-            <Text>{this.props.name}</Text>
-            <Text subtitle>({this.props.username})</Text>
-          </Left>
-        </CardItem>
+        <TouchableHighlight
+          onPress={() => {
+            Linking.openURL(
+              `https://www.instagram.com/${this.props.username}/`
+            );
+            console.log("Card Item touché");
+          }}
+        >
+          <CardItem header>
+            <Left>
+              <TouchableHighlight
+                onPress={() => {
+                  Linking.openURL(this.props.img);
+                  console.log("Avatar touché");
+                }}
+              >
+                <Thumbnail square large source={{ uri: this.props.img }} />
+              </TouchableHighlight>
+              <Text>{this.props.name}</Text>
+              <Text subtitle>({this.props.username})</Text>
+            </Left>
+          </CardItem>
+        </TouchableHighlight>
       </Card>
     );
   }
