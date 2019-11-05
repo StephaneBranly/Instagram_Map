@@ -37,7 +37,6 @@ export class ResumeUserCard extends React.Component {
             Linking.openURL(
               `https://www.instagram.com/${this.props.username}/`
             );
-            console.log("Card Item touché");
           }}
         >
           <CardItem header>
@@ -45,7 +44,6 @@ export class ResumeUserCard extends React.Component {
               <TouchableHighlight
                 onPress={() => {
                   Linking.openURL(this.props.img);
-                  console.log("Avatar touché");
                 }}
               >
                 <Thumbnail square large source={{ uri: this.props.img }} />

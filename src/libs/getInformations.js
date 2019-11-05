@@ -22,26 +22,34 @@ export async function getCoordinates(city) {
   }
 }
 
-export function createMarkers(data) {
-  const markers_liste = [];
-  data.map(post => {
-    const location = get(post, "node.location.name");
-    console.log("Location image : ", location);
-    if (location) {
-      getCoordinates(location).then(coord => {
-        console.log("Coord associées : ", coord);
-      });
-    }
-    //   if (coord /* && coord.latitude && coord.longitude*/) {
-    //     const new_marker = <Marker key={post.node.id} coordinate={coord} />;
-    //     markers_liste.push(new_marker);
-    //     markers_liste.push("Nouveau pin");
-    //     console.log("Markeur ", markers_liste);
-    //     console.log("New pin", coord);
-    //   }
-    // }
-    else console.log("Il n'y a pas de location");
+export async function createMarker(post) {
+  var new_marker = "";
+  const location = get(post, "node.location.name");
+  console.log("Location image : ", location);
+  if (location) {
+    getCoordinates(location).then(coord => {
+      if (coord && coord.latitude && coord.longitude) {
+        new_marker = `<Marker key=${post.node.id} coordinate={"latitude":${coord.latitude}, "longitude":${coord.longitude}} />`;
+        console.log("New marker : ", new_marker);
+        return new_marker;
+      } else return "";
+    });
+  } else return "";
+}
+
+export async function createMarkers(data) {
+  const markers_list = [];
+
+  requests = data.map(post => {
+    new_marker = createMarker(post);
+    Promise.resolve(new_marker).then(() => {
+      console.log("Creation de marker");
+      markers_list.push(new_marker);
+      console.log("Marker pushe");
+    });
   });
-  console.log("Before return : ", markers_liste);
-  return markers_liste;
+  Promise.all(requests).then(() => {
+    console.log("Before return : ", markers_list);
+    return markers_list;
+  });
 }

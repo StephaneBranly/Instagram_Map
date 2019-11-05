@@ -37,10 +37,12 @@ class Render_search_map extends React.Component {
         </Container>
       );
     }
-    // createMarkers(data_user_tl).then(created_markers => {
-    //   this.setState({ markers: created_markers });
-    // });
-    console.log(createMarkers(data_user_tl));
+    const markers = createMarkers(data_user_tl);
+    Promise.resolve(markers).then(() => {
+      console.log("Markers return :", markers);
+    });
+
+    /* MAJ-*/
     return (
       <MapView
         style={{ flex: 1 }}
