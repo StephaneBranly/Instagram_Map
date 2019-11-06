@@ -3,6 +3,10 @@ import { Image, Linking, TouchableHighlight } from "react-native";
 import get from "lodash/get";
 import { Card, CardItem, Text, Icon, Left, Right } from "native-base";
 
+//TODO : afficher lorsqu'il y a plusieurs images sur un même post
+//TODO : voir pour afficher les vidéos
+//TODO : retirer la location quand elle n'est pas indiquée dans le post
+//TODO : afficher les images avec les bonnes proportions
 class Pic_insta extends React.Component {
   render() {
     const { node } = this.props.post;

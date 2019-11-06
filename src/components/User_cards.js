@@ -2,6 +2,7 @@ import React from "react";
 import { TouchableHighlight, Linking } from "react-native";
 import { Card, CardItem, Icon, Text, Left, Thumbnail } from "native-base";
 
+//TODO : afficher une petite icone quand l'user est certifié
 export class NotFindUserCard extends React.Component {
   render() {
     return (

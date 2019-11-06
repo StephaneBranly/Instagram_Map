@@ -4,6 +4,7 @@ import get from "lodash/get";
 import { Card, Container } from "native-base";
 import { NotFindUserCard, PrivateUserCard, ResumeUserCard } from "./User_cards";
 
+//TODO : voir pour afficher tous les posts de user (et pas seulement les 11premiers)
 class Render_search_timeline extends React.Component {
   render() {
     const { user_tl } = this.props;

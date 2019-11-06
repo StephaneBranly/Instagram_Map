@@ -9,7 +9,8 @@ class Render_search_map extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      markers: []
+      markers: [],
+      isLoading: false
     };
   }
 
@@ -37,12 +38,17 @@ class Render_search_map extends React.Component {
         </Container>
       );
     }
-    const markers = createMarkers(data_user_tl);
-    Promise.resolve(markers).then(() => {
-      console.log("Markers return :", markers);
-    });
-
-    /* MAJ-*/
+    if (this.state.isLoading === false) {
+      this.setState({ isLoading: true });
+      console.log("Chargement des markeurs");
+      createMarkers(data_user_tl).then(results => {
+        this.setState({ markers: results });
+        console.log("Fin de chargement des markeurs");
+        console.log("Resultat :", this.state.markers);
+      });
+    }
+    //TODO : remonter la création de markers à App.js pour éviter de devoir recharger à chaque changement d'écran
+    //TODO : ajouter la possibilité d'enregistrer la vue actuelle
     return (
       <MapView
         style={{ flex: 1 }}
@@ -52,7 +58,18 @@ class Render_search_map extends React.Component {
           latitudeDelta: 0.02922,
           longitudeDelta: 0.02421
         }}
-      ></MapView>
+      >
+        <Marker
+          pinColor="green"
+          title="My first pin"
+          description="Ici il faut mettre une description du pin"
+          //image={data_user.profile_pic_url_hd} WORKS
+          coordinate={{
+            latitude: 49.416604379904584,
+            longitude: 2.8224315202378047
+          }}
+        />
+      </MapView>
     );
   }
 }
