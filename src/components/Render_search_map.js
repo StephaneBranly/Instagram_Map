@@ -38,15 +38,17 @@ class Render_search_map extends React.Component {
         </Container>
       );
     }
-    if (this.state.isLoading === false) {
-      this.setState({ isLoading: true });
-      console.log("Chargement des markeurs");
-      createMarkers(data_user_tl).then(results => {
-        this.setState({ markers: results });
-        console.log("Fin de chargement des markeurs");
-        console.log("Resultat :", this.state.markers);
-      });
-    }
+
+    // if (this.state.isLoading === false) {
+    //   this.setState({ isLoading: true });
+    //   console.log("Chargement des markeurs");
+    //   results = createMarkers(data_user_tl);
+
+    //   this.setState({ markers: results });
+    //   console.log("Fin de chargement des markeurs");
+    //   console.log("Resultat :", this.state.markers);
+    // }
+
     //TODO : remonter la création de markers à App.js pour éviter de devoir recharger à chaque changement d'écran
     //TODO : ajouter la possibilité d'enregistrer la vue actuelle
     return (

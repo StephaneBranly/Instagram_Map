@@ -8,7 +8,6 @@ import Footer_app from "./src/components/Footer";
 import Propos from "./src/components/Propos";
 import pick from "lodash/pick";
 import { getDataTLFromId } from "./src/libs/getTL";
-import default_datas from "./examples/data_user";
 
 export default class App extends React.Component {
   constructor(props) {

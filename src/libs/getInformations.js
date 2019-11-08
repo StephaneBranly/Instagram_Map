@@ -28,30 +28,28 @@ export async function createMarker(post) {
   const location = get(post, "node.location.name");
   console.log("Location image : ", location);
   if (location) {
-    getCoordinates(location).then(coord => {
-      if (coord && coord.latitude && coord.longitude) {
-        new_marker = `<Marker key=${post.node.id} coordinate={"latitude":${coord.latitude}, "longitude":${coord.longitude}} />`;
-        console.log("New marker : ", new_marker);
-        return new_marker;
-      } else return "aaa";
-    });
-  } else return "bbb";
+    coord = await getCoordinates(location);
+    if (coord && coord.latitude && coord.longitude) {
+      new_marker = `<Marker key=${post.node.id} coordinate={"latitude":${coord.latitude}, "longitude":${coord.longitude}} />`;
+      console.log("New marker : ", new_marker);
+      return new_marker;
+    }
+  }
 }
 
 export async function createMarkers(data) {
   const markers_list = [];
 
-  requests = data.map(post => {
-    new_marker = createMarker(post);
+  for (const post of data) {
+    new_marker = await createMarker(post);
     console.log("Nouveau arkeru", new_marker);
     Promise.resolve(new_marker).then(() => {
       console.log("Creation de marker");
       markers_list.push(new_marker);
       console.log("Marker pushe");
     });
-  });
-  Promise.all(requests).then(() => {
-    console.log("Before return : ", markers_list);
-    return markers_list;
-  });
+  }
+
+  console.log("Before return : ", markers_list);
+  return markers_list;
 }
