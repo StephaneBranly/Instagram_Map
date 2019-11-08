@@ -13,7 +13,8 @@ export async function getDataTLFromId(text, city = false) {
     }
 
     try {
-      return await response.json();
+      const objet_json = await response.json();
+      return objet_json;
     } catch (e) {
       return { unavailable: true };
     }

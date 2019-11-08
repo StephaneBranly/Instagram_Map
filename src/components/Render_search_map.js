@@ -14,6 +14,18 @@ class Render_search_map extends React.Component {
     };
   }
 
+  async informations(data_user_tl) {
+    if (this.state.isLoading === false) {
+      //this.setState({ isLoading: true });
+      console.log("Chargement des markeurs");
+      results = await createMarkers(data_user_tl);
+
+      //this.setState({ markers: results });
+      console.log("Fin de chargement des markeurs");
+      console.log("Resultat :", results);
+    }
+  }
+
   render() {
     const { user_tl } = this.props;
 
@@ -23,6 +35,7 @@ class Render_search_map extends React.Component {
       this.props.user_tl,
       "graphql.user.edge_owner_to_timeline_media.edges"
     );
+
     if (!data_user || !data_user_tl || isUnavailable) {
       return <NotFindUserCard />;
     }
@@ -38,17 +51,7 @@ class Render_search_map extends React.Component {
         </Container>
       );
     }
-
-    // if (this.state.isLoading === false) {
-    //   this.setState({ isLoading: true });
-    //   console.log("Chargement des markeurs");
-    //   results = createMarkers(data_user_tl);
-
-    //   this.setState({ markers: results });
-    //   console.log("Fin de chargement des markeurs");
-    //   console.log("Resultat :", this.state.markers);
-    // }
-
+    this.informations(data_user_tl);
     //TODO : remonter la création de markers à App.js pour éviter de devoir recharger à chaque changement d'écran
     //TODO : ajouter la possibilité d'enregistrer la vue actuelle
     return (

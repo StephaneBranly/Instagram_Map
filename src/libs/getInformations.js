@@ -1,3 +1,4 @@
+import React from "react";
 import { TOKEN } from "../../config/api_gps_token";
 import get from "lodash/get";
 import { Marker } from "react-native-maps";
@@ -30,7 +31,7 @@ export async function createMarker(post) {
   if (location) {
     coord = await getCoordinates(location);
     if (coord && coord.latitude && coord.longitude) {
-      new_marker = `<Marker key=${post.node.id} coordinate={"latitude":${coord.latitude}, "longitude":${coord.longitude}} />`;
+      new_marker = <Marker key={post.node.id} coordinate={coord} />;
       console.log("New marker : ", new_marker);
       return new_marker;
     }
