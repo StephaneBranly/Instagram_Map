@@ -9,31 +9,31 @@ import { Card, CardItem, Text, Icon, Left, Right } from "native-base";
 //TODO : afficher les images avec les bonnes proportions
 class Pic_insta extends React.Component {
   render() {
-    const { node } = this.props.post;
-    var location_name = get(node, "location.name");
-    if (!location_name) location_name = "non renseigné";
+    const { post } = this.props;
+    var location_name = get(post, "location");
+    let location = null;
+    if (location_name !== "unavaible")
+      location = <Text>à {location_name}</Text>;
     return (
       <Card style={{ flex: 0 }}>
         <TouchableHighlight
           onPress={() => {
-            Linking.openURL(node.display_url);
+            Linking.openURL(post.image);
           }}
         >
           <CardItem cardBody>
             <Image
               style={{ height: 250, width: null, flex: 1 }}
-              source={{ uri: node.display_url }}
+              source={{ uri: post.image }}
             />
           </CardItem>
         </TouchableHighlight>
         <CardItem footer>
           <Left style={{ flex: 1 }}>
-            <Text>{node.edge_liked_by.count} </Text>
+            <Text>{post.nb_likes} </Text>
             <Icon name="heart" />
           </Left>
-          <Right style={{ flex: 4 }}>
-            <Text>à {location_name}</Text>
-          </Right>
+          <Right style={{ flex: 4 }}>{location}</Right>
         </CardItem>
       </Card>
     );

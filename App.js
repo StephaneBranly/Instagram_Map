@@ -60,7 +60,7 @@ export default class App extends React.Component {
   };
 
   render() {
-    const { isReady, screen, searchedText } = this.state;
+    const { isReady, screen } = this.state;
     if (!isReady) {
       return <AppLoading />;
     }

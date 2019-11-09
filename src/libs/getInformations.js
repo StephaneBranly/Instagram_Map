@@ -1,3 +1,4 @@
+import React from "react";
 import { TOKEN } from "../../config/api_gps_token";
 import get from "lodash/get";
 import { Marker } from "react-native-maps";
@@ -23,33 +24,24 @@ export async function getCoordinates(city) {
   }
 }
 
-export async function createMarker(post) {
-  var new_marker = "";
-  const location = get(post, "node.location.name");
-  console.log("Location image : ", location);
-  if (location) {
-    coord = await getCoordinates(location);
-    if (coord && coord.latitude && coord.longitude) {
-      new_marker = `<Marker key=${post.node.id} coordinate={"latitude":${coord.latitude}, "longitude":${coord.longitude}} />`;
-      console.log("New marker : ", new_marker);
-      return new_marker;
+export async function createMarkers(data_user_tl) {
+  let markers = {};
+  posts_to_map = [];
+  for (const post of data_user_tl) {
+    if (post.coord !== null) {
+      posts_to_map.push(post);
     }
   }
-}
-
-export async function createMarkers(data) {
-  const markers_list = [];
-
-  for (const post of data) {
-    new_marker = await createMarker(post);
-    console.log("Nouveau arkeru", new_marker);
-    Promise.resolve(new_marker).then(() => {
-      console.log("Creation de marker");
-      markers_list.push(new_marker);
-      console.log("Marker pushe");
-    });
-  }
-
-  console.log("Before return : ", markers_list);
-  return markers_list;
+  markers = posts_to_map.map(post => (
+    <MapView.Marker
+      key={post.key}
+      pinColor="green"
+      title={post.location}
+      // description="Ici il faut mettre une description du pin"
+      coordinate={post.coord}
+    >
+      <Image source={{ uri: post.image }} style={{ height: 100, width: 100 }} />
+    </MapView.Marker>
+  ));
+  return markers;
 }

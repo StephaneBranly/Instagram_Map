@@ -1,4 +1,5 @@
 import React from "react";
+import { Image } from "react-native";
 import MapView, { Marker } from "react-native-maps";
 import get from "lodash/get";
 import { Card, CardItem, Text, Icon, Container } from "native-base";
@@ -17,62 +18,91 @@ class Render_search_map extends React.Component {
   render() {
     const { user_tl } = this.props;
 
-    const isUnavailable = get(user_tl, "unavailable", false);
-    const data_user = get(user_tl, "graphql.user");
-    const data_user_tl = get(
-      this.props.user_tl,
-      "graphql.user.edge_owner_to_timeline_media.edges"
-    );
-    if (!data_user || !data_user_tl || isUnavailable) {
+    const data_user_tl = get(user_tl, "posts");
+    if (user_tl === "user_unavaible" || !get(user_tl, "user")) {
       return <NotFindUserCard />;
-    }
-    if (data_user.is_private == true) {
+    } else if (user_tl.user.is_private === true) {
       return (
         <Container>
           <ResumeUserCard
-            name={data_user.full_name}
-            username={data_user.username}
-            img={data_user.profile_pic_url_hd}
+            name={user_tl.user.full_name}
+            username={user_tl.user.username}
+            img={user_tl.user.avatar}
           />
           <PrivateUserCard />
         </Container>
       );
-    }
-
-    // if (this.state.isLoading === false) {
-    //   this.setState({ isLoading: true });
-    //   console.log("Chargement des markeurs");
-    //   results = createMarkers(data_user_tl);
-
-    //   this.setState({ markers: results });
-    //   console.log("Fin de chargement des markeurs");
-    //   console.log("Resultat :", this.state.markers);
-    // }
-
-    //TODO : remonter la création de markers à App.js pour éviter de devoir recharger à chaque changement d'écran
-    //TODO : ajouter la possibilité d'enregistrer la vue actuelle
-    return (
-      <MapView
-        style={{ flex: 1 }}
-        initialRegion={{
-          latitude: 49.416604379904584,
-          longitude: 2.8224315202378047,
-          latitudeDelta: 0.02922,
-          longitudeDelta: 0.02421
-        }}
-      >
-        <Marker
+    } else {
+      //TODO : remonter la création de markers à App.js pour éviter de devoir recharger à chaque changement d'écran
+      //TODO : ajouter la possibilité d'enregistrer la vue actuelle
+      let markers = {};
+      posts_to_map = [];
+      let compteur = 0;
+      let lat_min = 0;
+      let lat_max = 0;
+      let lon_min = 0;
+      let lon_max = 0;
+      let lat_moy = 0;
+      let lon_moy = 0;
+      let lat_del = 0;
+      let lon_del = 0;
+      for (const post of data_user_tl) {
+        if (post.coord !== null) {
+          posts_to_map.push(post);
+          compteur += 1;
+          if (compteur === 1) {
+            lat_max = post.coord.latitude;
+            lat_min = lat_max;
+            lon_max = post.coord.longitude;
+            lon_min = lon_max;
+          }
+          if (post.coord.latitude < lat_min) lat_min = post.coord.latitude;
+          if (post.coord.latitude > lat_max) lat_max = post.coord.latitude;
+          if (post.coord.longitude < lon_min) lon_min = post.coord.longitude;
+          if (post.coord.longitude > lon_max) lon_max = post.coord.longitude;
+          lat_moy += post.coord.latitude;
+          lon_moy += post.coord.longitude;
+        }
+      }
+      if (compteur > 0) {
+        lat_moy = lat_moy / compteur;
+        lon_moy = lon_moy / compteur;
+        lat_del = lat_max - lat_min + 0.01;
+        lon_del = lon_max - lon_min + 0.01;
+      } else {
+        lat_moy = 49.416604379904584;
+        lon_moy = 2.8224315202378047;
+        lat_del = 0.0922;
+        lon_del = 0.02421;
+      }
+      markers = posts_to_map.map(post => (
+        <MapView.Marker
+          key={post.key}
           pinColor="green"
-          title="My first pin"
-          description="Ici il faut mettre une description du pin"
-          //image={data_user.profile_pic_url_hd} WORKS
-          coordinate={{
-            latitude: 49.416604379904584,
-            longitude: 2.8224315202378047
+          title={post.location}
+          // description="Ici il faut mettre une description du pin"
+          coordinate={post.coord}
+        >
+          <Image
+            source={{ uri: post.image }}
+            style={{ height: 100, width: 100 }}
+          />
+        </MapView.Marker>
+      ));
+      return (
+        <MapView
+          style={{ flex: 1 }}
+          initialRegion={{
+            latitude: lat_moy,
+            longitude: lon_moy,
+            latitudeDelta: lat_del,
+            longitudeDelta: lon_del
           }}
-        />
-      </MapView>
-    );
+        >
+          {markers}
+        </MapView>
+      );
+    }
   }
 }
 export default Render_search_map;
