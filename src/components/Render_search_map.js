@@ -37,18 +37,50 @@ class Render_search_map extends React.Component {
       //TODO : ajouter la possibilité d'enregistrer la vue actuelle
       let markers = {};
       posts_to_map = [];
+      let compteur = 0;
+      let lat_min = 0;
+      let lat_max = 0;
+      let lon_min = 0;
+      let lon_max = 0;
+      let lat_moy = 0;
+      let lon_moy = 0;
+      let lat_del = 0;
+      let lon_del = 0;
       for (const post of data_user_tl) {
         if (post.coord !== null) {
           posts_to_map.push(post);
+          compteur += 1;
+          if (compteur === 1) {
+            lat_max = post.coord.latitude;
+            lat_min = lat_max;
+            lon_max = post.coord.longitude;
+            lon_min = lon_max;
+          }
+          if (post.coord.latitude < lat_min) lat_min = post.coord.latitude;
+          if (post.coord.latitude > lat_max) lat_max = post.coord.latitude;
+          if (post.coord.longitude < lon_min) lon_min = post.coord.longitude;
+          if (post.coord.longitude > lon_max) lon_max = post.coord.longitude;
+          lat_moy += post.coord.latitude;
+          lon_moy += post.coord.longitude;
         }
       }
-      console.log("Posts a map", posts_to_map);
+      if (compteur > 0) {
+        lat_moy = lat_moy / compteur;
+        lon_moy = lon_moy / compteur;
+        lat_del = lat_max - lat_min + 0.01;
+        lon_del = lon_max - lon_min + 0.01;
+      } else {
+        lat_moy = 49.416604379904584;
+        lon_moy = 2.8224315202378047;
+        lat_del = 0.0922;
+        lon_del = 0.02421;
+      }
       markers = posts_to_map.map(post => (
         <MapView.Marker
           key={post.key}
           pinColor="green"
           title={post.location}
-          description="Ici il faut mettre une description du pin"
+          // description="Ici il faut mettre une description du pin"
           coordinate={post.coord}
         >
           <Image
@@ -57,27 +89,16 @@ class Render_search_map extends React.Component {
           />
         </MapView.Marker>
       ));
-      console.log(markers);
       return (
         <MapView
           style={{ flex: 1 }}
           initialRegion={{
-            latitude: 49.416604379904584,
-            longitude: 2.8224315202378047,
-            latitudeDelta: 0.02922,
-            longitudeDelta: 0.02421
+            latitude: lat_moy,
+            longitude: lon_moy,
+            latitudeDelta: lat_del,
+            longitudeDelta: lon_del
           }}
         >
-          <Marker
-            pinColor="green"
-            title="My first pin"
-            description="Ici il faut mettre une description du pin"
-            //image={data_user.profile_pic_url_hd} WORKS
-            coordinate={{
-              latitude: 49.416604379904584,
-              longitude: 2.8224315202378047
-            }}
-          />
           {markers}
         </MapView>
       );
