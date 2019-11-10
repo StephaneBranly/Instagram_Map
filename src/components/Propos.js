@@ -122,9 +122,9 @@ class Propos extends React.Component {
             <ListItem>
               <Text>react-native-map</Text>
             </ListItem>
-            <ListItem>
+            {/* <ListItem>
               <Text>OpenCage Geocoding API</Text>
-            </ListItem>
+            </ListItem> */}
           </List>
         </Content>
       </Container>

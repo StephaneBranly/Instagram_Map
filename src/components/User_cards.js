@@ -50,7 +50,7 @@ export class ResumeUserCard extends React.Component {
                 <Thumbnail square large source={{ uri: this.props.img }} />
               </TouchableHighlight>
               <Text>{this.props.name}</Text>
-              <Text subtitle>({this.props.username})</Text>
+              <Text note>({this.props.username})</Text>
             </Left>
           </CardItem>
         </TouchableHighlight>

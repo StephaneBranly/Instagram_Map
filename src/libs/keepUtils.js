@@ -24,7 +24,8 @@ export async function keepUtils(data) {
         if (!location_name) {
           location_name = "unavaible";
         } else {
-          coord = await getCoordinates(location_name);
+          const location_id = get(post, "node.location.id");
+          coord = await getCoordinates(location_id);
         }
         if (!coord) coord = null;
         const new_post = {

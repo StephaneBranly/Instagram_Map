@@ -31,7 +31,7 @@ class Pic_insta extends React.Component {
         <CardItem footer>
           <Left style={{ flex: 1 }}>
             <Text>{post.nb_likes} </Text>
-            <Icon name="heart" />
+            <Icon style={{ color: "#ED4A6A" }} name="heart" />
           </Left>
           <Right style={{ flex: 4 }}>{location}</Right>
         </CardItem>
