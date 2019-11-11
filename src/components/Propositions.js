@@ -1,39 +1,45 @@
 import React from "react";
-import { ActivityIndicator, Text } from "react-native";
+import { Text, TouchableHighlight } from "react-native";
 import {
-  Container,
-  Header,
-  Input,
-  Item,
-  Icon,
-  List,
-  ListItem,
-  Avatar,
+  Card,
+  CardItem,
   Left,
   Body,
-  Thumbnail
+  Thumbnail,
+  Icon,
+  Right
 } from "native-base";
-import { searchPropositions } from "../libs/searchPropositions";
+import get from "lodash/get";
 
 export default class Propositions extends React.Component {
   render() {
     let propositions = null;
-    if (this.props.propositions !== null || this.props.focus) {
+    propositions_check = get(this.props, "propositions");
+    if (propositions_check !== null && this.props.focus) {
       propositions = this.props.propositions.map(post => (
-        <ListItem avatar key={post.user.pk}>
-          <Left>
+        <TouchableHighlight
+          key={post.user.pk}
+          onPress={() => {
+            this.props.changePlaceHolder(post.user.username);
+          }}
+        >
+          <CardItem avatar key={post.user.pk}>
             <Thumbnail
+              small
+              style={{ marginRight: 5 }}
               source={{
                 uri: post.user.profile_pic_url
               }}
             />
-          </Left>
-          <Body>
+            {post.user.is_verified && (
+              <Icon name="ios-checkmark-circle-outline" />
+            )}
+            {post.user.is_private && <Icon name="ios-eye-off" />}
             <Text>{post.user.username}</Text>
-          </Body>
-        </ListItem>
+          </CardItem>
+        </TouchableHighlight>
       ));
     }
-    return <List>{propositions}</List>;
+    return <Card>{propositions}</Card>;
   }
 }

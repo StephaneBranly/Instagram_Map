@@ -10,7 +10,7 @@ export async function searchPropositions(query) {
     const donnees = get(content, "users");
     if (!donnees) return null;
     else {
-      return donnees;
+      return donnees.slice(0, 5);
     }
   } catch (error) {
     return console.log("erreur");

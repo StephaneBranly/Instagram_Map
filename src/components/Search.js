@@ -13,17 +13,6 @@ class Search extends React.Component {
     this.state = { propositions: [] };
   }
 
-  _displayLoading() {
-    const { isLoading } = this.props;
-    if (isLoading) {
-      return (
-        <Container>
-          <ActivityIndicator size="large" />
-        </Container>
-      );
-    }
-  }
-
   onChange = e => {
     e.preventDefault();
     const newText = get(e, "nativeEvent.text", "");
@@ -34,38 +23,56 @@ class Search extends React.Component {
     });
   };
 
+  changePlaceHolder = text => {
+    this.props.searchTextInputChanged(text);
+    this.setState({ propositions: [] });
+  };
+
   render() {
     const {
       load_user,
       screen,
-      searchedText,
       searchFocus,
-      user_tl
+      user_tl,
+      searchedText
     } = this.props;
     const { propositions } = this.state;
 
+    const { isLoading } = this.props;
+
     return (
       <Container>
-        <Container>
-          <Header searchBar rounded>
-            <Item>
-              <Icon onPress={load_user} name="ios-search" />
-              <Input
-                placeholder="Rechercher"
-                value={searchedText}
-                onChange={this.onChange}
-                autoFocus={searchFocus}
-              />
-              <Icon name="ios-people" />
-            </Item>
-          </Header>
-          <Propositions propositions={propositions} focus={searchFocus} />
-          {screen === "timeline" && (
-            <Render_search_timeline user_tl={user_tl} />
-          )}
-          {screen === "map" && <Render_search_map user_tl={user_tl} />}
-        </Container>
-        {this._displayLoading()}
+        <Header searchBar rounded>
+          <Item>
+            <Icon onPress={load_user} name="ios-search" />
+            <Input
+              placeholder="Rechercher"
+              value={searchedText}
+              onChange={this.onChange}
+              autoFocus={searchFocus}
+            />
+            <Icon name="ios-people" />
+          </Item>
+        </Header>
+        {this.state.propositions !== [] && (
+          <Propositions
+            propositions={propositions}
+            focus={searchFocus}
+            changePlaceHolder={this.changePlaceHolder}
+          />
+        )}
+        {!isLoading && screen === "timeline" && (
+          <Render_search_timeline user_tl={user_tl} />
+        )}
+        {!isLoading && screen === "map" && (
+          <Render_search_map user_tl={user_tl} />
+        )}
+
+        {isLoading && (
+          <Container>
+            <ActivityIndicator size="large" />
+          </Container>
+        )}
       </Container>
     );
   }

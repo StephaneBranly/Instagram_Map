@@ -34,7 +34,6 @@ class Render_search_map extends React.Component {
         </Container>
       );
     } else {
-      //TODO : remonter la création de markers à App.js pour éviter de devoir recharger à chaque changement d'écran
       //TODO : ajouter la possibilité d'enregistrer la vue actuelle
       let markers = {};
       posts_to_map = [];
@@ -99,6 +98,7 @@ class Render_search_map extends React.Component {
             latitudeDelta: lat_del,
             longitudeDelta: lon_del
           }}
+          onLongPress={this.screenshot_map}
         >
           {markers}
         </MapView>
