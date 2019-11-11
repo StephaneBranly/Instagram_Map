@@ -1,24 +1,16 @@
 import React from "react";
-import { ActivityIndicator } from "react-native";
+import { ActivityIndicator, Text } from "react-native";
 import Render_search_timeline from "./Render_search_timeline";
 import Render_search_map from "./Render_search_map";
+import Propositions from "./Propositions";
 import { Container, Header, Input, Item, Icon } from "native-base";
 import get from "lodash/get";
+import { searchPropositions } from "../libs/searchPropositions";
 
 class Search extends React.Component {
   constructor(props) {
     super(props);
-  }
-
-  _displayLoading() {
-    const { isLoading } = this.props;
-    if (isLoading) {
-      return (
-        <Container>
-          <ActivityIndicator size="large" />
-        </Container>
-      );
-    }
+    this.state = { propositions: [] };
   }
 
   onChange = e => {
@@ -26,38 +18,61 @@ class Search extends React.Component {
     const newText = get(e, "nativeEvent.text", "");
     const { searchTextInputChanged } = this.props;
     searchTextInputChanged(newText);
+    searchPropositions(newText).then(data => {
+      this.setState({ propositions: data });
+    });
+  };
+
+  changePlaceHolder = text => {
+    this.props.searchTextInputChanged(text);
+    this.setState({ propositions: [] });
   };
 
   render() {
     const {
       load_user,
       screen,
-      searchedText,
       searchFocus,
-      user_tl
+      user_tl,
+      searchedText
     } = this.props;
+    const { propositions } = this.state;
+
+    const { isLoading } = this.props;
 
     return (
       <Container>
-        <Container>
-          <Header searchBar rounded>
-            <Item>
-              <Icon onPress={load_user} name="ios-search" />
-              <Input
-                placeholder="Rechercher"
-                value={searchedText}
-                onChange={this.onChange}
-                autoFocus={searchFocus}
-              />
-              <Icon name="ios-people" />
-            </Item>
-          </Header>
-          {screen === "timeline" && (
-            <Render_search_timeline user_tl={user_tl} />
-          )}
-          {screen === "map" && <Render_search_map user_tl={user_tl} />}
-        </Container>
-        {this._displayLoading()}
+        <Header searchBar rounded>
+          <Item>
+            <Icon onPress={load_user} name="ios-search" />
+            <Input
+              placeholder="Rechercher"
+              value={searchedText}
+              onChange={this.onChange}
+              autoFocus={searchFocus}
+            />
+            <Icon name="ios-people" />
+          </Item>
+        </Header>
+        {this.state.propositions !== [] && (
+          <Propositions
+            propositions={propositions}
+            focus={searchFocus}
+            changePlaceHolder={this.changePlaceHolder}
+          />
+        )}
+        {!isLoading && screen === "timeline" && (
+          <Render_search_timeline user_tl={user_tl} />
+        )}
+        {!isLoading && screen === "map" && (
+          <Render_search_map user_tl={user_tl} />
+        )}
+
+        {isLoading && (
+          <Container>
+            <ActivityIndicator size="large" />
+          </Container>
+        )}
       </Container>
     );
   }

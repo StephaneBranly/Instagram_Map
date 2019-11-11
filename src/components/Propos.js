@@ -34,8 +34,8 @@ class Propos extends React.Component {
                 );
               }}
             >
-              <Icon name="ios-git-network" />
-              <Text> Github du projet</Text>
+              <Icon name="ios-git-network" style={{ marginRight: 5 }} />
+              <Text>Github du projet</Text>
             </ListItem>
 
             <ListItem
@@ -46,8 +46,8 @@ class Propos extends React.Component {
                 );
               }}
             >
-              <Icon name="ios-gift" />
-              <Text> Faire un don</Text>
+              <Icon name="ios-gift" style={{ marginRight: 5 }} />
+              <Text>Faire un don</Text>
             </ListItem>
 
             <Separator bordered>

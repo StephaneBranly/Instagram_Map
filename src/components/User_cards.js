@@ -31,6 +31,15 @@ export class PrivateUserCard extends React.Component {
 
 export class ResumeUserCard extends React.Component {
   render() {
+    let verified_icon = {};
+    if (this.props.is_verified == true)
+      verified_icon = (
+        <Icon
+          style={{ marginLeft: 5, color: "#31e834" }}
+          name="ios-checkmark-circle-outline"
+        />
+      );
+    else verified_icon = null;
     return (
       <Card style={{ flex: 0 }}>
         <TouchableHighlight
@@ -49,6 +58,7 @@ export class ResumeUserCard extends React.Component {
               >
                 <Thumbnail square large source={{ uri: this.props.img }} />
               </TouchableHighlight>
+              {verified_icon}
               <Text>{this.props.name}</Text>
               <Text note>({this.props.username})</Text>
             </Left>

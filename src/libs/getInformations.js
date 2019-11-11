@@ -1,9 +1,7 @@
 import React from "react";
-import { TOKEN } from "../../config/api_gps_token";
+//import { TOKEN } from "../../config/api_gps_token";
 import get from "lodash/get";
-import { Marker } from "react-native-maps";
 
-//TODO : voir pour essayer de prendre les coordonnées à partir d'une page de la ville sur instagram
 export async function getCoordinates(location_id) {
   //const url = `https://api.opencagedata.com/geocode/v1/json?q=${city}&key=${TOKEN}`;
   const url = `https://www.instagram.com/graphql/query/?query_hash=ac38b90f0f3981c42092016a37c59bf7&variables={"id":${location_id},"first":12,"after":null}`;

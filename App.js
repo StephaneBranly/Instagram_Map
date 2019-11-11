@@ -30,6 +30,7 @@ export default class App extends React.Component {
     });
 
     this.setState({ isReady: true, screen: "map" });
+    this.load_user();
   }
 
   load_user = () => {
