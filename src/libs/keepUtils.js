@@ -8,6 +8,7 @@ export async function keepUtils(data) {
   else {
     objet_data.user = {
       is_private: data_parcours.is_private,
+      is_verified: data_parcours.is_verified,
       username: data_parcours.username,
       full_name: data_parcours.full_name,
       avatar: data_parcours.profile_pic_url_hd

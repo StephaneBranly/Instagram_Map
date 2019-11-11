@@ -28,6 +28,7 @@ class Render_search_map extends React.Component {
             name={user_tl.user.full_name}
             username={user_tl.user.username}
             img={user_tl.user.avatar}
+            is_verified={user_tl.user.is_verified}
           />
           <PrivateUserCard />
         </Container>
