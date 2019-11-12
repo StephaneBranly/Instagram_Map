@@ -13,8 +13,8 @@ Application en React Native servant à voir ses posts Instagrams sur un planisph
 
 ## Rendu
 
-![Planisphere](https://zupimages.net/up/19/45/tt76.png)
-![Timeline](https://zupimages.net/up/19/45/7t14.png)
+![Planisphere](https://zupimages.net/up/19/46/gsms.png)
+![Timeline](https://zupimages.net/up/19/46/ckxl.png)
 
 ## Installation
 

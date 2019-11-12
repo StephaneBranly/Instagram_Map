@@ -27,7 +27,7 @@ class Propos extends React.Component {
             </ListItem>
 
             <ListItem>
-              <Text>Version alpha 0.0.5</Text>
+              <Text>Version alpha 0.0.6</Text>
             </ListItem>
 
             <ListItem
