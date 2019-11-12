@@ -26,6 +26,10 @@ class Propos extends React.Component {
               <Text>Date de création : 27/10/2019</Text>
             </ListItem>
 
+            <ListItem>
+              <Text>Version alpha 0.0.5</Text>
+            </ListItem>
+
             <ListItem
               button
               onPress={() => {

@@ -2,9 +2,8 @@ import React from "react";
 import { Image } from "react-native";
 import MapView, { Marker } from "react-native-maps";
 import get from "lodash/get";
-import { Card, CardItem, Text, Icon, Container } from "native-base";
+import { Container } from "native-base";
 import { NotFindUserCard, PrivateUserCard, ResumeUserCard } from "./User_cards";
-import { createMarkers } from "../libs/getInformations";
 
 class Render_search_map extends React.Component {
   constructor(props) {
@@ -14,6 +13,17 @@ class Render_search_map extends React.Component {
       isLoading: false
     };
   }
+
+  // takeSnapshot = () => {
+  //   const snapshot = this.map.takeSnapshot({
+  //     format: "png", // image formats: 'png', 'jpg' (default: 'png')
+  //     quality: 0.8, // image quality: 0..1 (only relevant for jpg, default: 1)
+  //     result: "file" // result types: 'file', 'base64' (default: 'file')
+  //   });
+  //   snapshot.then(uri => {
+  //     console.log(uri);
+  //   });
+  // };
 
   render() {
     const { user_tl } = this.props;
@@ -28,12 +38,12 @@ class Render_search_map extends React.Component {
             name={user_tl.user.full_name}
             username={user_tl.user.username}
             img={user_tl.user.avatar}
-            is_verified={user_tl.user.is_verified}
           />
           <PrivateUserCard />
         </Container>
       );
     } else {
+      //TODO : remonter la création de markers à App.js pour éviter de devoir recharger à chaque changement d'écran
       //TODO : ajouter la possibilité d'enregistrer la vue actuelle
       let markers = {};
       posts_to_map = [];
@@ -91,6 +101,9 @@ class Render_search_map extends React.Component {
       ));
       return (
         <MapView
+          // ref={map => {
+          //   this.map = map;
+          // }}
           style={{ flex: 1 }}
           initialRegion={{
             latitude: lat_moy,
@@ -98,7 +111,7 @@ class Render_search_map extends React.Component {
             latitudeDelta: lat_del,
             longitudeDelta: lon_del
           }}
-          onLongPress={this.screenshot_map}
+          // onLongPress={this.takeSnapshot}
         >
           {markers}
         </MapView>

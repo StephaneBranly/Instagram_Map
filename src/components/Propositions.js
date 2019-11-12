@@ -1,14 +1,6 @@
 import React from "react";
 import { Text, TouchableHighlight } from "react-native";
-import {
-  Card,
-  CardItem,
-  Left,
-  Body,
-  Thumbnail,
-  Icon,
-  Right
-} from "native-base";
+import { Card, CardItem, Thumbnail, Icon } from "native-base";
 import get from "lodash/get";
 
 export default class Propositions extends React.Component {
@@ -39,7 +31,8 @@ export default class Propositions extends React.Component {
           </CardItem>
         </TouchableHighlight>
       ));
+      return <Card>{propositions}</Card>;
     }
-    return <Card>{propositions}</Card>;
+    return null;
   }
 }

@@ -1,6 +1,6 @@
 import React from "react";
 import Search from "./src/components/Search";
-import { Root, FooterTab, Footer, Icon, Text, Button } from "native-base";
+import { Root } from "native-base";
 import { AppLoading } from "expo";
 import * as Font from "expo-font";
 import { Ionicons } from "@expo/vector-icons";
