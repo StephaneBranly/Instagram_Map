@@ -30,6 +30,8 @@
     "androidStatusBar": {
       "barStyle": "light-content",
       "backgroundColor": "#334393"
-    }
+    },
+    "description": "Application en React Native servant à voir ses posts Instagrams sur un planisphère (lorsqu'un lieu a été renseigné)",
+    "githubUrl": "https://github.com/StephaneBranly/Instagram_Map"
   }
 }
