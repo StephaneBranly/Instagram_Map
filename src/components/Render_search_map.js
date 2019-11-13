@@ -83,8 +83,8 @@ class Render_search_map extends React.Component {
       } else {
         lat_moy = 49.416604379904584;
         lon_moy = 2.8224315202378047;
-        lat_del = 0.0922;
-        lon_del = 0.02421;
+        lat_del = 0.00922;
+        lon_del = 0.002421;
       }
       markers = posts_to_map.map(post => (
         <MapView.Marker
