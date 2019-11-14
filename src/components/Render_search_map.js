@@ -58,7 +58,11 @@ class Render_search_map extends React.Component {
       let lat_del = 0;
       let lon_del = 0;
       for (const post of data_user_tl) {
-        if (post.coord !== null) {
+        if (
+          post.coord !== null &&
+          post.coord.longitude !== null &&
+          post.coord.latitude !== null
+        ) {
           posts_to_map.push(post);
           compteur += 1;
           if (compteur === 1) {
