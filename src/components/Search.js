@@ -28,6 +28,10 @@ class Search extends React.Component {
     this.setState({ propositions: [] });
   };
 
+  clearText = () => {
+    this.props.searchTextInputChanged("");
+  };
+
   render() {
     const {
       load_user,
@@ -39,6 +43,7 @@ class Search extends React.Component {
     const { propositions } = this.state;
 
     const { isLoading } = this.props;
+    const hasContent = searchedText.length > 0;
 
     return (
       <Container>
@@ -49,9 +54,17 @@ class Search extends React.Component {
               placeholder="Rechercher"
               value={searchedText}
               onChange={this.onChange}
+              onSubmitEditing={load_user}
               autoFocus={searchFocus}
+              returnKeyType="search"
             />
-            <Icon name="ios-people" />
+            {hasContent && (
+              <Icon
+                onPress={this.clearText}
+                name="circle-with-cross"
+                type="Entypo"
+              />
+            )}
           </Item>
         </Header>
         {this.state.propositions !== [] && (
