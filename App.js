@@ -29,7 +29,7 @@ export default class App extends React.Component {
       ...Ionicons.font
     });
 
-    this.setState({ isReady: true, screen: "map" });
+    this.setState({ isReady: true, screen: "timeline" });
     this.load_user();
   }
 
@@ -70,7 +70,7 @@ export default class App extends React.Component {
       "user_tl"
     ]);
 
-    if (!["map", "propos", "timeline"].includes(screen)) {
+    if (!["propos", "timeline"].includes(screen)) {
       return <AppLoading />;
     }
 
