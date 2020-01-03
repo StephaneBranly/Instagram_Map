@@ -4,12 +4,8 @@
     "slug": "Instagram_Map",
     "privacy": "public",
     "sdkVersion": "35.0.0",
-    "platforms": [
-      "ios",
-      "android",
-      "web"
-    ],
-    "version": "0.0.9",
+    "platforms": ["ios", "android", "web"],
+    "version": "0.1.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "splash": {
@@ -20,9 +16,7 @@
     "updates": {
       "fallbackToCacheTimeout": 0
     },
-    "assetBundlePatterns": [
-      "**/*"
-    ],
+    "assetBundlePatterns": ["**/*"],
     "ios": {
       "supportsTablet": true
     },
@@ -33,7 +27,7 @@
     },
     "android": {
       "package": "com.stephane_branly.instagram_map",
-      "permissions" : []
+      "permissions": []
     },
     "description": "Application en React Native servant à voir ses posts Instagrams sur un planisphère (lorsqu'un lieu a été renseigné)",
     "githubUrl": "https://github.com/StephaneBranly/Instagram_Map"
