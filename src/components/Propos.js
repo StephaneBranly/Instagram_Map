@@ -27,7 +27,7 @@ class Propos extends React.Component {
             </ListItem>
 
             <ListItem>
-              <Text>Version beta 0.0.9</Text>
+              <Text>Version beta 0.1.0</Text>
             </ListItem>
 
             <ListItem
@@ -122,9 +122,6 @@ class Propos extends React.Component {
             </ListItem>
             <ListItem>
               <Text>native-base</Text>
-            </ListItem>
-            <ListItem>
-              <Text>react-native-map</Text>
             </ListItem>
             {/* <ListItem>
               <Text>OpenCage Geocoding API</Text>

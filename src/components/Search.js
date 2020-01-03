@@ -1,7 +1,6 @@
 import React from "react";
 import { ActivityIndicator } from "react-native";
 import Render_search_timeline from "./Render_search_timeline";
-import Render_search_map from "./Render_search_map";
 import Propositions from "./Propositions";
 import { Container, Header, Input, Item, Icon } from "native-base";
 import get from "lodash/get";
@@ -76,9 +75,6 @@ class Search extends React.Component {
         )}
         {!isLoading && screen === "timeline" && (
           <Render_search_timeline user_tl={user_tl} />
-        )}
-        {!isLoading && screen === "map" && (
-          <Render_search_map user_tl={user_tl} />
         )}
 
         {isLoading && (
