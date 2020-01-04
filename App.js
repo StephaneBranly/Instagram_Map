@@ -29,7 +29,7 @@ export default class App extends React.Component {
       ...Ionicons.font
     });
 
-    this.setState({ isReady: true, screen: "timeline" });
+    this.setState({ isReady: true, screen: "map" });
     this.load_user();
   }
 
@@ -52,6 +52,10 @@ export default class App extends React.Component {
     this.setState({ screen: "timeline", searchFocus: false });
   };
 
+  change_screen_map = () => {
+    this.setState({ screen: "map", searchFocus: false });
+  };
+
   change_screen_propos = () => {
     this.setState({ screen: "propos", searchFocus: false });
   };
@@ -70,7 +74,7 @@ export default class App extends React.Component {
       "user_tl"
     ]);
 
-    if (!["propos", "timeline"].includes(screen)) {
+    if (!["map", "propos", "timeline"].includes(screen)) {
       return <AppLoading />;
     }
 
@@ -88,6 +92,7 @@ export default class App extends React.Component {
         <Footer_app
           screen={screen}
           change_screen_timeline={this.change_screen_timeline}
+          change_screen_map={this.change_screen_map}
           change_screen_propos={this.change_screen_propos}
         />
       </Root>
