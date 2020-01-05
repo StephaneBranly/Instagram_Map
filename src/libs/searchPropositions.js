@@ -13,6 +13,6 @@ export async function searchPropositions(query) {
       return donnees.slice(0, 5);
     }
   } catch (error) {
-    return console.log("erreur");
+    return null;
   }
 }
