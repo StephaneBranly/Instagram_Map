@@ -19,7 +19,8 @@ class Search extends React.Component {
     const { searchTextInputChanged } = this.props;
     searchTextInputChanged(newText);
     searchPropositions(newText).then(data => {
-      this.setState({ propositions: data });
+      if (this.props.searchedText === newText)
+        this.setState({ propositions: data });
     });
   };
 
@@ -30,6 +31,7 @@ class Search extends React.Component {
 
   clearText = () => {
     this.props.searchTextInputChanged("");
+    this.setState({ propositions: [] });
   };
 
   render() {
@@ -69,9 +71,9 @@ class Search extends React.Component {
         </Header>
         {this.state.propositions !== [] && (
           <Propositions
-            propositions={propositions}
-            focus={searchFocus}
             changePlaceHolder={this.changePlaceHolder}
+            focus={searchFocus}
+            propositions={propositions}
           />
         )}
         {!isLoading && screen === "timeline" && (
