@@ -1,5 +1,4 @@
 import get from "lodash/get";
-import { getCoordinates } from "./getInformations";
 
 export async function keepUtils(data) {
   const objet_data = [];
@@ -20,19 +19,25 @@ export async function keepUtils(data) {
       );
       const posts = [];
       for (const post of data_user_tl) {
+        location_id = null;
         let location_name = get(post, "node.location.name");
         let coord;
         if (!location_name) {
           location_name = "unavaible";
         } else {
-          const location_id = get(post, "node.location.id");
-          coord = await getCoordinates(location_id);
+          location_id = get(post, "node.location.id");
+          // coord = await getCoordinates(location_id);
+          coord = {
+            latitude: null,
+            longitude: null
+          };
         }
         if (!coord) coord = null;
         const new_post = {
           image: post.node.display_url,
           nb_likes: post.node.edge_liked_by.count,
           location: location_name,
+          location_id: location_id,
           coord: coord,
           key: post.node.id
         };

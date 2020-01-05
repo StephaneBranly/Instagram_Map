@@ -7,7 +7,9 @@ import { Ionicons } from "@expo/vector-icons";
 import Footer_app from "./src/components/Footer";
 import Propos from "./src/components/Propos";
 import pick from "lodash/pick";
+import get from "lodash/get";
 import { getDataTLFromId } from "./src/libs/getTL";
+import { getCoordinates } from "./src/libs/getInformations";
 
 export default class App extends React.Component {
   constructor(props) {
@@ -40,6 +42,15 @@ export default class App extends React.Component {
       this.setState({ isLoading: true });
       getDataTLFromId(this.state.searchedText).then(datas => {
         this.setState({ user_tl: datas, isLoading: false });
+        const data_user_tl = get(datas, "posts");
+        for (const post of data_user_tl) {
+          if (post.location_id != null) {
+            getCoordinates(post.location_id).then(coord => {
+              post.coord = coord;
+              this.setState({ user_tl: datas });
+            });
+          }
+        }
       });
     }
   };

@@ -1,6 +1,6 @@
 import React from "react";
 import { Image } from "react-native";
-import MapView, { Marker } from "react-native-maps";
+import MapView from "react-native-maps";
 import get from "lodash/get";
 import { Container } from "native-base";
 import { NotFindUserCard, PrivateUserCard, ResumeUserCard } from "./User_cards";
