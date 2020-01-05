@@ -43,7 +43,6 @@ class Render_search_map extends React.Component {
         </Container>
       );
     } else {
-      //TODO : remonter la création de markers à App.js pour éviter de devoir recharger à chaque changement d'écran
       //TODO : ajouter la possibilité d'enregistrer la vue actuelle
       let markers = {};
       let markersShow = {};
@@ -79,6 +78,7 @@ class Render_search_map extends React.Component {
           lon_moy += post.coord.longitude;
         }
       }
+
       if (compteur > 0) {
         lat_moy = lat_moy / compteur;
         lon_moy = lon_moy / compteur;
@@ -90,6 +90,13 @@ class Render_search_map extends React.Component {
         lat_del = 0.00922;
         lon_del = 0.002421;
       }
+      initialRegion = {
+        latitude: lat_moy,
+        longitude: lon_moy,
+        latitudeDelta: lat_del,
+        longitudeDelta: lon_del
+      };
+
       markers = posts_to_map.map(post => (
         <MapView.Marker
           key={post.key}
@@ -105,18 +112,14 @@ class Render_search_map extends React.Component {
         </MapView.Marker>
       ));
       markersShow = markers;
+
       return (
         <MapView
           // ref={map => {
           //   this.map = map;
           // }}
           style={{ flex: 1 }}
-          initialRegion={{
-            latitude: lat_moy,
-            longitude: lon_moy,
-            latitudeDelta: lat_del,
-            longitudeDelta: lon_del
-          }}
+          initialRegion={initialRegion}
           // onLongPress={this.takeSnapshot}
         >
           {markersShow}
