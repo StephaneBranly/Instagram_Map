@@ -10,7 +10,7 @@
   "dependencies": {
     "@eva-design/eva": "^1.2.0",
     "expo": "^35.0.0",
-    "expo-cli": "^3.4.1",
+    "expo-cli": "^6.0.6",
     "expo-font": "~7.0.0",
     "lodash": "^4.17.15",
     "native-base": "^2.13.8",
